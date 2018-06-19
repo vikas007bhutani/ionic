@@ -1,0 +1,109 @@
+<p-tabView>
+    <p-tabPanel header="Students">
+        <div class="row align-items-center">
+            <!--<Primeng-Datatable-Start>-->
+            <div class="primeng-datatable-container">
+              <p-dataTable #dataStudentTable
+                           (onLazyLoad)="getAllStudents($event)"
+                           [value]="primengDatatableHelper.records"
+                           rows="{{primengDatatableHelper.defaultRecordsCountPerPage}}"
+                           [paginator]="false"
+                           [lazy]="true"
+                           emptyMessage="No Data"
+                           scrollable="true"
+                           ScrollWidth="80%"
+                           responsive="primengDatatableHelper.isResponsive"
+                           resizableColumns="primengDatatableHelper.resizableColumns">
+  
+                <p-column field="userCode" header="User Code"  ></p-column>
+                <p-column field="firstName" header="Student First Name"  ></p-column>
+                <p-column field="lastName" header="Student Last Name"  ></p-column>
+                <p-column field="mobile" header="Parent's Mobile" ></p-column>
+                <p-column field="email" header="Email" ></p-column>
+                <p-column field="className" header="Class"  ></p-column>
+                <p-column field="sectionName" header="Section"  ></p-column>
+                <p-column field="rollNumber" header="Roll Number"  ></p-column>
+                <p-column *ngIf="isAdmin" field="userId" header="Update/View" >
+                    <ng-template let-data="rowData" pTemplate="body">
+                        <a (click)="showUserProfile(data.userId)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                      </ng-template>
+                </p-column>
+                <p-column *ngIf="isAdmin" field="activeStatus" header="Account Status">
+                    <ng-template let-data="rowData" pTemplate="body">
+                        <p-inputSwitch [(ngModel)]="data.activeStatus"></p-inputSwitch>
+                      </ng-template>
+                </p-column>
+  
+              </p-dataTable>
+              <div class="primeng-paging-container">
+                <p-paginator rows="{{primengDatatableHelper.defaultRecordsCountPerPage}}"
+                             #studentpaginator
+                             (onPageChange)="getAllStudents($event)"
+                             [totalRecords]="primengDatatableHelper.totalRecordsCount"
+                             [rowsPerPageOptions]="primengDatatableHelper.predefinedRecordsCountPerPage">
+                </p-paginator>
+                <span class="total-records-count">
+                  Total: {{primengDatatableHelper.totalRecordsCount}}
+                </span>
+              </div>
+            </div>
+            <!--<Primeng-Datatable-End>-->
+          </div>
+    </p-tabPanel>
+    <p-tabPanel header="Staff">
+        <div class="row align-items-center">
+            <!--<Primeng-Datatable-Start>-->
+            <div class="primeng-datatable-container">
+              <p-dataTable #dataStaffTable
+                           (onLazyLoad)="getAllStaffs($event)"
+                           [value]="primengDatatableHelperStaff.records"
+                           rows="{{primengDatatableHelperStaff.defaultRecordsCountPerPage}}"
+                           [paginator]="false"
+                           [lazy]="true"
+                           emptyMessage="No Data"
+                           scrollable="true"
+                           ScrollWidth="80%"
+                           responsive="primengDatatableHelperStaff.isResponsive"
+                           resizableColumns="primengDatatableHelperStaff.resizableColumns">
+  
+                <p-column field="userCode" header="User Code"  ></p-column>
+                <p-column field="firstName" header=  "First Name"  ></p-column>
+                <p-column field="lastName" header="Last Name"  ></p-column>
+                <p-column field="mobile" header="Mobile" ></p-column>
+                <p-column field="email" header="Email" ></p-column>
+                <p-column field="assignedClass" header="Assigned Class" ></p-column>
+                <p-column field="assignedSection" header="Assigned Section" ></p-column>
+                <p-column field="speciality" header="Speciality" ></p-column>
+                <p-column field="employeeCategory" header="Employee Category" ></p-column>
+                <p-column *ngIf="isAdmin" field="userId" header="Update/View" >
+                    <ng-template let-data="rowData" pTemplate="body">
+                        <a (click)="showUserProfile(data.userId)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                      </ng-template>
+                </p-column>
+                <p-column *ngIf="isAdmin" field="activeStatus" header="Account Status">
+                    <ng-template let-data="rowData" pTemplate="body">
+                        <p-inputSwitch [(ngModel)]="data.activeStatus"></p-inputSwitch>
+                      </ng-template>
+                </p-column>
+  
+              </p-dataTable>
+              <div class="primeng-paging-container">
+                <p-paginator rows="{{primengDatatableHelperStaff.defaultRecordsCountPerPage}}"
+                             #staffpaginator
+                             (onPageChange)="getAllStaffs($event)"
+                             [totalRecords]="primengDatatableHelperStaff.totalRecordsCount"
+                             [rowsPerPageOptions]="primengDatatableHelperStaff.predefinedRecordsCountPerPage">
+                </p-paginator>
+                <span class="total-records-count">
+                  Total: {{primengDatatableHelperStaff.totalRecordsCount}}
+                </span>
+              </div>
+            </div>
+            <!--<Primeng-Datatable-End>-->
+          </div>
+    </p-tabPanel>
+</p-tabView>
+
+<p-sidebar [(visible)]="showUpdateUserSidebar" position="right">
+    {{this.userProfileDetails|json}}
+</p-sidebar>
